@@ -20,6 +20,9 @@ pub trait CaptureStream<'a>: Stream {
     /// Remove a buffer from the drivers' outgoing queue
     fn dequeue(&mut self) -> io::Result<usize>;
 
+    /// Fetch frame and metadata at specified buffer index.
+    fn get(&self, index: usize) -> io::Result<(&Self::Item, &Metadata)>;
+
     /// Fetch a new frame by first queueing and then dequeueing.
     /// First time initialization is performed if necessary.
     fn next(&'a mut self) -> io::Result<(&Self::Item, &Metadata)>;

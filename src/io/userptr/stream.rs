@@ -186,6 +186,10 @@ impl<'a> CaptureStream<'a> for Stream {
         Ok(self.arena_index)
     }
 
+    fn get(&self, index: usize) -> io::Result<(&Self::Item, &Metadata)> {
+        Ok((&self.arena.bufs[index], &self.buf_meta[index]))
+    }
+
     fn next(&'a mut self) -> io::Result<(&Self::Item, &Metadata)> {
         if !self.active {
             // Enqueue all buffers once on stream start
